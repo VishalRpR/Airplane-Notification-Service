@@ -10,6 +10,9 @@ async function connectQueue(){
         await channel.assertQueue("noti-queue");
         channel.consume("noti-queue",async(data)=>{
             console.log(`${Buffer.from(data.content)}`);
+            const object=JSON.parse(`${Buffer.from(data.content)}`);
+            await EmailService.sendEmail('testingformailer@gmail.com',object.recepientEmail,object.subject,object.text)
+            channel.ack(data);
         })
         
     } catch (error) {
@@ -24,6 +27,7 @@ async function connectQueue(){
 
 const { ServerConfig } = require('./config');
 const apiRoutes = require('./routes');
+const { EmailService } = require('./services');
 
 const app = express();
 app.use(express.json());

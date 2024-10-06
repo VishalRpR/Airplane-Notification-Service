@@ -4,7 +4,7 @@ const {TicketRepository}=require('../repositories');
 const ticketRepo=new TicketRepository();
 
 
-async function sendEmail(mailTo,mailFrom,subject,text){
+async function sendEmail(mailFrom,mailTo,subject,text){
 
     try {
     const response = await mailsender.sendMail({
